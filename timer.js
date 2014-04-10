@@ -1,5 +1,6 @@
 var timeLeft = 0,
 	totalTime = 0,
+	lastTime = 0,
 	paused = true,
 	timeOut;
 var makeTime = function(seconds) {
@@ -32,8 +33,9 @@ var tick = function() {
 				alertTime("30 Seconds");
 				break;
 		}
-		timeLeft -= 1;
-		timeOut = setTimeout(tick, 1000);
+		timeLeft -= Math.floor(new Date().getTime()/1000) - Math.floor(lastTime/1000);
+		lastTime = new Date().getTime();
+		timeOut = setTimeout(tick, 100);
 	} else {
 		if (!paused) {
 			paused = true;
@@ -47,10 +49,12 @@ var startTimer = function(time) {
 	if (paused && timeLeft > 0) {
 		paused = false;
 		timeLeft = time;
+		lastTime = new Date().getTime();
 		tick();
 	}
 }
 $(document).ready(function() {
+	alert(new Date().getTime()/1000);
 	$(".icon#pause").click(function() {
 		paused = true;
 		$("#alert").fadeOut(800);
