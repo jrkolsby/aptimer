@@ -54,7 +54,6 @@ var startTimer = function(time) {
 	}
 }
 $(document).ready(function() {
-	alert(new Date().getTime()/1000);
 	$(".icon#pause").click(function() {
 		paused = true;
 		$("#alert").fadeOut(800);
